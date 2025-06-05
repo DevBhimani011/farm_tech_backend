@@ -20,12 +20,21 @@ const dotenv = require("dotenv");
 dotenv.config();
 app.use(
   cors({
-    origin: process.env.CLIENT_URL, // Or an array of allowed origins
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        'http://localhost:5173',
+        'https://your-frontend.onrender.com', // Replace with actual frontend URL
+      ];
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "UPDATE"], // This allows cookies to be sent with requests.
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'UPDATE'],
   })
 );
-
 app.use(cookieParser());
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));

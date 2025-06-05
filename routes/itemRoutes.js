@@ -3,6 +3,8 @@ const router = express.Router();
 const itemController = require("../controllers/itemController");
 const multer = require("multer");
 const upload = require("../middlewares/multer");
+const authMiddleware = require('../middlewares/authMiddleware');
+router.get("/showPro", authMiddleware, itemController.showPro);
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -16,7 +18,7 @@ const storage = multer.diskStorage({
 
 router.get("/search", itemController.searchItems);
 router.get("/items", itemController.getAllItems);
-router.get("/showPro", itemController.showPro);
+router.get("/showPro", authMiddleware, itemController.showPro);
 router.post("/add", upload.fields([{
   name: "image", maxCount: 1
 }]), itemController.addProduct);

@@ -72,10 +72,10 @@ const authController = {
       );
 
       res.cookie("loginCookie", token, {
-        httpOnly: true,
-        secure: true,
-        sameSite:"None",
-        maxAge: 24 * 60 * 60 * 1000,
+        httpOnly: true, // Use true for security unless the frontend needs to access it
+        secure: process.env.NODE_ENV === 'development', // Only set secure in production
+        sameSite: process.env.NODE_ENV === 'development' ? 'None' : 'Lax', // Adjust for local testing
+        maxAge: 24 * 60 * 60 * 1000, // 24 hours
       });
       res.status(201).json({ message: "Signup successful" });
     } catch (error) {
