@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-const port = 8080;
 const mongoose = require("mongoose");
 const Item = require("./models/item.js");
 const Cart = require("./models/cart.js");
@@ -67,6 +66,7 @@ const itemRoutes = require("./routes/itemRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 const orderRoutes = require("./routes/orderRoutes");
+const { env } = require("process");
 
 app.use("/auth", authRoutes);
 app.use("/item", itemRoutes);
@@ -74,8 +74,8 @@ app.use("/cart", cartRoutes);
 app.use("/payment", paymentRoutes);
 app.use("/orders", orderRoutes);
 
-app.listen(port, () => {
-  console.log(`port is listing in ${port}`);
+app.listen(env.PORT || 3000, () => {
+  console.log(`port is listing in ${env.PORT || 3000}`);
 });
 
 module.exports = app;
