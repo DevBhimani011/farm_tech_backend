@@ -73,8 +73,8 @@ const authController = {
 
       res.cookie("loginCookie", token, {
         httpOnly: true,
-        secure: false,
-        sameSite:"lax",
+        secure: true,
+        sameSite:"None",
         maxAge: 24 * 60 * 60 * 1000,
       });
       res.status(201).json({ message: "Signup successful" });
